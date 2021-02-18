@@ -1,23 +1,45 @@
-hourglass= [
-        (0, 0),
-        (0, 1),
-        (0, 2),
-        (1, 1),
-        (2, 0),
-        (2, 1),
-        (2, 2),
-    ]
+import math
+import os
+import random
+import re
+import sys
 
-def initialize_y(arr):
-    y_coor = [0, 1, 2, 1, 0, 1, 2]
-    x_coor = [x for x, y in arr]
-    arr = [(x, y) for x, y in zip(x_coor, y_coor)]
-    return arr
-
-for i in range(16):
-    print(hourglass)
-    if i % 4 == 0 and i != 0:
-        hourglass = initialize_y(hourglass)
-        hourglass = [(x+1, y) for x, y in hourglass]
+def longestSubarray(arr):
+    # Write your code here
+    
+    l = []
+    if len(arr) == 1:
+        return 1
     else:
-        hourglass = [(x, y+1) for x, y in hourglass]
+        for i in range(len(arr)):
+            longest = 0
+
+            if i == (len(arr) - 2):
+                longest = 1
+                l.append(longest)
+            for j in range(i+1, len(arr)):
+                if abs(arr[i] - arr[j]) <= 1:
+                    if (abs(i - j) == 1):
+                        longest += 2
+                    if abs(i - j) > 1:
+                        longest += 1
+                    l.append(longest)
+                else:
+                    break
+            
+            
+        return max(l)
+
+if __name__ == '__main__':
+    arr_count = int(input().strip())
+
+    arr = []
+
+    for _ in range(arr_count):
+        arr_item = int(input().strip())
+        arr.append(arr_item)
+
+    result = longestSubarray(arr)
+
+    print(result)
+
